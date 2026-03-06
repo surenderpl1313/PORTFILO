@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Surender Pal Singh</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{--bg:#c5c1ad;--panel:#c5c1ad;--panel2:#bcb8a4;--panel3:#d0ccb8;--border:#96927e;--border2:#7a7668;--text:#1a1a14;--mid:#5a5848;--dim:#8a8878;--green:#4aff6e;--gdim:#2a6a3a;--glow:rgba(0,0,0,0);background:var(--bg);font-family:'IBM Plex Mono',monospace;height:100vh;display:flex;overflow:hidden;}
+body.dark{--bg:#0a0f0a;--panel:#0a0f0a;--panel2:#0d130d;--panel3:#111811;--border:#1a3a1a;--border2:#2a5a2a;--text:#a0ffa0;--mid:#4a8a4a;--dim:#2a5a2a;--green:#4aff6e;--gdim:#39ff14;--glow:rgba(74,255,110,0.15);cursor:none;}
+body.dark::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.18) 2px,rgba(0,0,0,.18) 4px);}
+body.dark::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:8999;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.75) 100%);}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes flicker{0%,19%,21%,23%,25%,54%,56%,100%{opacity:1}20%,24%,55%{opacity:.75}}
+@keyframes glitch{0%,90%,100%{clip-path:none;transform:none;}91%{clip-path:polygon(0 20%,100% 20%,100% 40%,0 40%);transform:translate(-3px,0);}92%{clip-path:polygon(0 60%,100% 60%,100% 80%,0 80%);transform:translate(3px,0);}93%,95%{clip-path:none;transform:none;}94%{clip-path:polygon(0 10%,100% 10%,100% 30%,0 30%);transform:translate(-2px,0);}}
+.left{width:400px;min-width:400px;background:var(--panel);display:flex;flex-direction:column;border-right:1px solid var(--border2);transition:all .4s;}
+body.dark .left{box-shadow:inset -8px 0 20px rgba(74,255,110,.03);animation:flicker 8s infinite;}
+.topbar{display:flex;align-items:center;height:52px;flex-shrink:0;border-bottom:1px solid var(--border2);background:var(--panel2);transition:all .4s;}
+.tlogo{display:flex;align-items:center;gap:10px;padding:0 14px;height:100%;border-right:1px solid var(--border2);}
+.tcircle{width:32px;height:32px;border-radius:50%;border:2px solid var(--border2);background:var(--panel3);display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .4s;}
+body.dark .tcircle{box-shadow:0 0 8px var(--glow);}
+.tname{font-size:8.5px;font-weight:600;letter-spacing:.1em;line-height:1.5;text-transform:uppercase;color:var(--text);transition:all .4s;}
+body.dark .tname{text-shadow:0 0 8px var(--green);}
+.turl{flex:1;height:100%;padding:0 12px;display:flex;align-items:center;border-right:1px solid var(--border2);}
+.urlbar{width:100%;height:22px;background:var(--panel3);border:1px solid var(--border2);display:flex;align-items:center;padding:0 8px;font-size:9px;color:var(--dim);letter-spacing:.06em;transition:all .4s;}
+body.dark .urlbar::before{content:'> ';color:var(--gdim);animation:blink 1.2s step-end infinite;}
+.ttag{padding:0 14px;font-size:9px;font-weight:600;letter-spacing:.14em;color:var(--text);white-space:nowrap;transition:all .4s;}
+body.dark .ttag{color:var(--gdim);text-shadow:0 0 8px var(--gdim);}
+.hatch{height:12px;margin:7px 14px 0;background:repeating-linear-gradient(-55deg,var(--border2) 0px,var(--border2) 1px,transparent 1px,transparent 6px);opacity:.5;}
+.sec{font-size:8px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--mid);padding:7px 14px 2px;transition:all .4s;}
+nav{padding:2px 0 4px;}
+nav a{display:block;padding:5px 14px;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);cursor:pointer;text-decoration:none;transition:color .15s,text-shadow .15s;position:relative;}
+nav a.active{color:var(--text);font-weight:600;}
+nav a:hover{color:var(--text);}
+body.dark nav a.active{text-shadow:0 0 8px var(--green);animation:glitch 6s infinite;}
+body.dark nav a:hover{text-shadow:0 0 6px var(--green);}
+.content{flex:1;overflow-y:auto;padding:14px;border-top:1px solid var(--border2);scrollbar-width:thin;scrollbar-color:var(--border2) transparent;}
+.content::-webkit-scrollbar{width:4px;}
+.content::-webkit-scrollbar-thumb{background:var(--border2);}
+body.dark .content::-webkit-scrollbar-thumb{box-shadow:0 0 6px var(--green);}
+.pg{display:none;}.pg.on{display:block;}
+.stamp{display:inline-block;border:2px solid var(--mid);padding:2px 8px;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--mid);transform:rotate(-2deg);margin-bottom:12px;opacity:.85;position:relative;}
+.stamp::after{content:'';position:absolute;inset:2px;border:1px solid var(--dim);pointer-events:none;}
+body.dark .stamp{box-shadow:0 0 6px var(--glow);}
+.lbl{font-size:8px;font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:var(--mid);margin-bottom:4px;}
+.val{font-size:10.5px;color:var(--text);line-height:1.7;margin-bottom:12px;}
+.irow{display:flex;justify-content:space-between;align-items:center;padding:7px 10px;border-bottom:1px solid var(--border);font-size:10px;}
+.irow:last-child{border-bottom:none;}
+.ik{font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);}
+.iv{color:var(--text);}
+.iv a{color:var(--text);text-decoration:none;}
+.card{border:1px solid var(--border2);padding:12px;margin-bottom:10px;background:var(--panel2);position:relative;transition:all .2s;}
+.card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(to bottom,var(--gdim),transparent);opacity:0;transition:opacity .2s;}
+.card:hover::before{opacity:1;}
+body.dark .card:hover{box-shadow:0 0 12px var(--glow);}
+.ctop{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;}
+.ctitle{font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text);}
+body.dark .ctitle{text-shadow:0 0 6px var(--green);}
+.cyear{font-size:9px;color:var(--dim);}
+.cdesc{font-size:9.5px;color:var(--mid);line-height:1.6;margin-bottom:7px;}
+.clinks{display:flex;gap:7px;margin-bottom:6px;}
+.clinks a{font-size:8.5px;color:var(--text);text-decoration:none;border:1px solid var(--border2);padding:2px 8px;letter-spacing:.08em;text-transform:uppercase;background:var(--panel);transition:all .15s;}
+.clinks a:hover{border-color:var(--mid);}
+.tag{display:inline-block;border:1px solid var(--border);padding:1px 6px;font-size:8.5px;letter-spacing:.06em;text-transform:uppercase;margin-right:3px;margin-top:2px;background:var(--panel3);color:var(--dim);}
+.arow{display:flex;gap:12px;align-items:flex-start;padding:9px 10px;border-bottom:1px solid var(--border);}
+.arow:last-child{border-bottom:none;}
+.anum{font-size:9px;font-weight:700;color:var(--gdim);flex-shrink:0;}
+body.dark .anum{text-shadow:0 0 8px var(--gdim);}
+.bot{display:flex;border-top:1px solid var(--border2);flex-shrink:0;}
+.hirebtn{flex:1;background:var(--panel2);border:none;border-right:1px solid var(--border2);padding:13px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;color:var(--text);transition:all .2s;}
+.hirebtn:hover{background:var(--panel3);}
+body.dark .hirebtn{text-shadow:0 0 8px var(--green);}
+.ledbox{width:46px;display:flex;align-items:center;justify-content:center;background:var(--panel2);border-right:1px solid var(--border2);}
+.led{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 1.8s ease-in-out infinite;}
+body.dark .led{box-shadow:0 0 8px var(--green),0 0 16px var(--gdim);}
+.moonbtn{width:46px;display:flex;align-items:center;justify-content:center;background:var(--panel2);border:none;cursor:pointer;font-size:15px;transition:all .2s;}
+.moonbtn:hover{background:var(--panel3);}
+.right{flex:1;background:var(--bg);display:flex;align-items:center;justify-content:center;position:relative;transition:background .4s;}
+body.dark .right{background:radial-gradient(ellipse at 60% 50%,#0a1a0a 0%,#050a05 100%);}
+.monitor{width:min(560px,84%);aspect-ratio:1.05/1;position:relative;z-index:2;}
+.mshell{width:100%;height:100%;border-radius:28px;padding:16px;background:linear-gradient(160deg,#ccc8b4 0%,#aaa698 45%,#96927e 100%);box-shadow:inset 0 3px 6px rgba(255,255,255,.28),inset 0 -3px 8px rgba(0,0,0,.25),5px 8px 0 #7a7668,8px 14px 24px rgba(0,0,0,.35);transition:all .4s;}
+body.dark .mshell{background:linear-gradient(150deg,#1a2a1a 0%,#0d1a0d 40%,#080e08 100%);box-shadow:inset 0 2px 4px rgba(74,255,110,.08),inset 0 -2px 6px rgba(0,0,0,.6),0 0 0 1px #1a3a1a,4px 6px 0 #050a05,6px 10px 20px rgba(0,0,0,.8);}
+.mscreen{width:100%;height:100%;background:#060d07;border-radius:12px;overflow:hidden;position:relative;box-shadow:inset 0 0 80px rgba(0,0,0,.95);}
+.mscreen::after{content:'';position:absolute;inset:0;z-index:20;border-radius:12px;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.18) 2px,rgba(0,0,0,.18) 4px);}
+.mscreen::before{content:'';position:absolute;inset:0;z-index:21;border-radius:12px;pointer-events:none;background:radial-gradient(ellipse at center,transparent 44%,rgba(0,0,0,.75) 100%);}
+#gc{position:absolute;inset:0;width:100%;height:100%;z-index:5;display:block;}
+.status{position:absolute;bottom:18px;right:18px;background:var(--panel);border:1px solid var(--border2);padding:6px 11px;font-size:8px;letter-spacing:.12em;z-index:3;transition:all .4s;}
+body.dark .status{box-shadow:0 0 10px var(--glow);}
+.srow{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:3px 0;border-bottom:1px solid var(--border);text-transform:uppercase;color:var(--mid);}
+.srow:last-child{border-bottom:none;}
+.sdot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s ease-in-out infinite;}
+body.dark .sdot{box-shadow:0 0 8px var(--green);}
+.sdot.d1{animation-delay:.5s}.sdot.d2{animation-delay:1s}
+.cur{display:none;}
+body.dark .cur{display:inline-block;width:7px;height:12px;background:var(--green);margin-left:2px;animation:blink .8s step-end infinite;vertical-align:middle;}
+a,button,.hirebtn,.moonbtn{cursor:pointer;}
+</style>
+</head>
+<body id="body">
+
+<div class="left">
+  <div class="topbar">
+    <div class="tlogo">
+      <div class="tcircle">🌐</div>
+      <div class="tname">SURENDER<br>PAL SINGH</div>
+    </div>
+    <div class="turl"><div class="urlbar">surenderpalsingh.dev</div></div>
+    <div class="ttag">SPS</div>
+  </div>
+  <div class="sec">NAVIGATION</div>
+  <div class="hatch"></div>
+  <nav>
+    <a class="active" onclick="go('info',this)">INFO</a>
+    <a onclick="go('projects',this)">PROJECTS</a>
+    <a onclick="go('skills',this)">SKILLS</a>
+    <a onclick="go('blog',this)">BLOG</a>
+    <a onclick="go('contact',this)">CONTACT</a>
+  </nav>
+  <div class="content">
+
+    <div class="pg on" id="pg-info">
+      <div class="stamp">PORTFOLIO // 2025</div>
+      <div style="padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid var(--border2)">
+        <div style="font-size:22px;font-weight:700;color:var(--text);line-height:1.2;margin-bottom:10px;">
+          Hi, I'm <span style="color:var(--gdim)">Surender</span><span class="cur"></span>
+        </div>
+        <div style="font-size:10.5px;color:var(--mid);line-height:1.8;margin-bottom:14px">
+          CS student deep in the <strong style="color:var(--gdim)">Web3 rabbit hole</strong> — reading whitepapers, breaking things, and building stuff <strong style="color:var(--text)">on-chain</strong>.
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <span style="font-size:8.5px;color:var(--mid);border:1px solid var(--border);padding:3px 8px">📍 Hyderabad</span>
+          <a href="https://github.com/surenderml1313" target="_blank" style="font-size:8.5px;color:var(--mid);text-decoration:none;border:1px solid var(--border2);padding:3px 8px;background:var(--panel2)">GitHub</a>
+          <a href="https://linkedin.com/in/surender-pal-singh1313" target="_blank" style="font-size:8.5px;color:var(--mid);text-decoration:none;border:1px solid var(--border2);padding:3px 8px;background:var(--panel2)">LinkedIn</a>
+          <a href="https://substack.com/@surenderpalsingh1" target="_blank" style="font-size:8.5px;color:var(--mid);text-decoration:none;border:1px solid var(--border2);padding:3px 8px;background:var(--panel2)">Blog</a>
+          <a href="mailto:surenderpal3035@gmail.com" style="font-size:8.5px;color:var(--mid);text-decoration:none;border:1px solid var(--border2);padding:3px 8px;background:var(--panel2)">Email</a>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px">
+        <span style="font-size:12px;font-weight:700;color:var(--text)">Writing</span>
+        <a href="#" onclick="go('blog',document.querySelectorAll('nav a')[3]);return false;" style="font-size:8.5px;color:var(--dim);text-decoration:none">View All →</a>
+      </div>
+      <div style="border:1px solid var(--border2);background:var(--panel2);margin-bottom:16px">
+        <div style="display:flex;gap:12px;padding:10px 12px;border-bottom:1px solid var(--border)">
+          <span style="font-size:9px;color:var(--dim);flex-shrink:0;width:40px">2024</span>
+          <div><div style="font-size:10px;font-weight:600;color:var(--text);margin-bottom:2px">IPFS Explained: Content Addressing</div><div style="font-size:9px;color:var(--mid)">How IPFS uses content addressing over location-based retrieval</div></div>
+        </div>
+        <div style="display:flex;gap:12px;padding:10px 12px">
+          <span style="font-size:9px;color:var(--dim);flex-shrink:0;width:40px">2024</span>
+          <div><div style="font-size:10px;font-weight:600;color:var(--text);margin-bottom:2px">Is JSON the Hidden Backbone of Web3?</div><div style="font-size:9px;color:var(--mid)">How JSON underpins NFT metadata and smart contract ABIs</div></div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px">
+        <span style="font-size:12px;font-weight:700;color:var(--text)">Projects</span>
+        <a href="#" onclick="go('projects',document.querySelectorAll('nav a')[1]);return false;" style="font-size:8.5px;color:var(--dim);text-decoration:none">View All →</a>
+      </div>
+      <div style="border:1px solid var(--border2);background:var(--panel2)">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-bottom:1px solid var(--border)"><div><div style="font-size:10px;font-weight:600;color:var(--text)">SkillTube</div><div style="font-size:9px;color:var(--mid)">AI-powered learning platform</div></div><a href="https://skillbuild.space/" target="_blank" style="font-size:9px;color:var(--mid);text-decoration:none;border:1px solid var(--border2);padding:2px 7px;background:var(--panel)">↗</a></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-bottom:1px solid var(--border)"><div><div style="font-size:10px;font-weight:600;color:var(--text)">IPFS NFT Viewer</div><div style="font-size:9px;color:var(--mid)">Web3 on-chain metadata viewer</div></div><a href="https://surenderpl1313.github.io/ipfs-nft-viewer/" target="_blank" style="font-size:9px;color:var(--mid);text-decoration:none;border:1px solid var(--border2);padding:2px 7px;background:var(--panel)">↗</a></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px"><div><div style="font-size:10px;font-weight:600;color:var(--text)">AI Chatbot</div><div style="font-size:9px;color:var(--mid)">NLP conversational chatbot</div></div><a href="https://chatbot-b62i.onrender.com/" target="_blank" style="font-size:9px;color:var(--mid);text-decoration:none;border:1px solid var(--border2);padding:2px 7px;background:var(--panel)">↗</a></div>
+      </div>
+    </div>
+
+    <div class="pg" id="pg-projects">
+      <div class="stamp">BUILD LOG // 2024-25</div>
+      <div class="card"><div class="ctop"><div class="ctitle">SkillTube</div><div class="cyear">2025</div></div><div class="cdesc">AI-powered personalized learning platform with curated video content.</div><div class="clinks"><a href="https://skillbuild.space/" target="_blank">↗ LIVE</a></div><span class="tag">Python</span><span class="tag">Node.js</span><span class="tag">REST APIs</span></div>
+      <div class="card"><div class="ctop"><div class="ctitle">IPFS NFT Viewer</div><div class="cyear">2025</div></div><div class="cdesc">Web3 app for viewing on-chain NFT metadata stored on IPFS.</div><div class="clinks"><a href="https://surenderpl1313.github.io/ipfs-nft-viewer/" target="_blank">↗ LIVE</a><a href="https://github.com/surenderml1313" target="_blank">↗ GITHUB</a></div><span class="tag">Web3.js</span><span class="tag">Ethers.js</span><span class="tag">IPFS</span></div>
+      <div class="card"><div class="ctop"><div class="ctitle">NFT Generator</div><div class="cyear">2024</div></div><div class="cdesc">Programmatically generate and deploy NFT collections on-chain.</div><div class="clinks"><a href="https://github.com/surenderml1313" target="_blank">↗ GITHUB</a></div><span class="tag">Solidity</span><span class="tag">Web3.js</span><span class="tag">Python</span></div>
+      <div class="card"><div class="ctop"><div class="ctitle">AI Chatbot</div><div class="cyear">2024</div></div><div class="cdesc">NLP conversational chatbot deployed on Render.</div><div class="clinks"><a href="https://chatbot-b62i.onrender.com/" target="_blank">↗ LIVE</a></div><span class="tag">Python</span><span class="tag">NLP</span></div>
+    </div>
+
+    <div class="pg" id="pg-skills">
+      <div class="stamp">STACK // CERTIFIED</div>
+      <div class="lbl" style="margin-bottom:8px">LANGUAGES</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px"><span class="tag" style="font-size:9.5px;padding:4px 10px">Python</span><span class="tag" style="font-size:9.5px;padding:4px 10px">JavaScript</span><span class="tag" style="font-size:9.5px;padding:4px 10px">Solidity</span></div>
+      <div class="lbl" style="margin-bottom:8px">BACKEND</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px"><span class="tag" style="font-size:9.5px;padding:4px 10px">Node.js</span><span class="tag" style="font-size:9.5px;padding:4px 10px">Express.js</span><span class="tag" style="font-size:9.5px;padding:4px 10px">REST APIs</span></div>
+      <div class="lbl" style="margin-bottom:8px">WEB3 / BLOCKCHAIN</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px"><span class="tag" style="font-size:9.5px;padding:4px 10px">Ethereum</span><span class="tag" style="font-size:9.5px;padding:4px 10px">Solidity</span><span class="tag" style="font-size:9.5px;padding:4px 10px">Web3.js</span><span class="tag" style="font-size:9.5px;padding:4px 10px">Ethers.js</span><span class="tag" style="font-size:9.5px;padding:4px 10px">IPFS</span><span class="tag" style="font-size:9.5px;padding:4px 10px">NFTs</span></div>
+      <div class="lbl" style="margin-bottom:8px">TOOLS</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px"><span class="tag" style="font-size:9.5px;padding:4px 10px">Git</span><span class="tag" style="font-size:9.5px;padding:4px 10px">GitHub</span><span class="tag" style="font-size:9.5px;padding:4px 10px">Google Cloud</span><span class="tag" style="font-size:9.5px;padding:4px 10px">Neo4j</span></div>
+      <div class="lbl" style="margin-bottom:8px">CERTIFICATIONS</div>
+      <div class="card" style="padding:0;margin-bottom:14px">
+        <div class="irow"><span class="ik">Google Cloud</span><span class="iv">Foundational / Associate</span></div>
+        <div class="irow"><span class="ik">Neo4j</span><span class="iv">Graph DB Certified Pro</span></div>
+      </div>
+      <div class="lbl" style="margin-bottom:8px">ACHIEVEMENTS</div>
+      <div class="card" style="padding:0">
+        <div class="arow"><span class="anum">01</span><span style="font-size:10px;color:var(--text)">1st Place — College-level Hackathon</span></div>
+        <div class="arow"><span class="anum">02</span><span style="font-size:10px;color:var(--text)">Organized Hackathons &amp; Webathons</span></div>
+        <div class="arow"><span class="anum">03</span><span style="font-size:10px;color:var(--text)">Active contributor driving peer learning</span></div>
+      </div>
+    </div>
+
+    <div class="pg" id="pg-blog">
+      <div class="stamp">DISPATCH // SUBSTACK</div>
+      <div class="val">Technical articles on Web3, blockchain and decentralized protocols.</div>
+      <div class="card"><div class="ctitle" style="margin-bottom:6px">IPFS Explained: Content Addressing</div><div class="cdesc">How IPFS uses content addressing instead of location-based addressing.</div><div class="clinks"><a href="https://open.substack.com/pub/surenderpalsingh1/p/ipfs-explained-content-addressing" target="_blank">↗ READ</a></div></div>
+      <div class="card"><div class="ctitle" style="margin-bottom:6px">Is JSON the Hidden Backbone of Web3?</div><div class="cdesc">How JSON underpins NFT metadata, smart contract ABIs, and the Web3 data layer.</div><div class="clinks"><a href="https://open.substack.com/pub/surenderpalsingh1/p/is-json-just-a-concept-or-the-hidden" target="_blank">↗ READ</a></div></div>
+      <div class="lbl">PUBLICATION</div>
+      <div class="val"><a href="https://substack.com/@surenderpalsingh1" target="_blank" style="color:var(--text)">substack.com/@surenderpalsingh1</a></div>
+    </div>
+
+    <div class="pg" id="pg-contact">
+      <div class="stamp">UPLINK // OPEN</div>
+      <div class="val">Open to Web3 roles, collaborations, and freelance projects.</div>
+      <div class="card" style="padding:0">
+        <div class="irow"><span class="ik">Email</span><span class="iv"><a href="mailto:surenderpal3035@gmail.com">surenderpal3035@gmail.com</a></span></div>
+        <div class="irow"><span class="ik">GitHub</span><span class="iv"><a href="https://github.com/surenderml1313" target="_blank">surenderml1313</a></span></div>
+        <div class="irow"><span class="ik">LinkedIn</span><span class="iv"><a href="https://linkedin.com/in/surender-pal-singh1313" target="_blank">surender-pal-singh1313</a></span></div>
+        <div class="irow"><span class="ik">Blog</span><span class="iv"><a href="https://substack.com/@surenderpalsingh1" target="_blank">@surenderpalsingh1</a></span></div>
+        <div class="irow"><span class="ik">Location</span><span class="iv">Hyderabad, India</span></div>
+      </div>
+    </div>
+
+  </div>
+  <div class="bot">
+    <button class="hirebtn" onclick="window.location.href='mailto:surenderpal3035@gmail.com'">GET IN TOUCH</button>
+    <div class="ledbox"><div class="led"></div></div>
+    <button class="moonbtn" id="themeBtn" onclick="toggleTheme()">🌙</button>
+  </div>
+</div>
+
+<div class="right">
+  <!-- Roaming dragon behind globe -->
+  <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:hidden;">
+    <defs>
+      <g id="DR"><path id="dr-b" fill="#2a6a3a" d="M-21.05,-8.25Q-13.6 -15.95 -1.3 -12.1Q-7.85 -8.5 -5.85 -4.35Q-2.3 -4.85 10.5 0.15Q0 4.35 -5.85 3.65Q-7.85 7.75 -1.25 12.45Q-13.6 15.2 -21.05 7.5Q-29.55 4.05 -30.2 -0.35Q-29.55 -4.8 -21.05 -8.25"/><path fill="#ffffff" d="M-28.9,-1.1L-28.55 -1.95Q-28.1 -3.1 -27.25 -2.95L-26.7 -2.95Q-27.7 -1.65 -28.9 -1.1M-18.35,-1.8Q-15.1 -10.3 -9.6 -6.05Q-15.1 -6.2 -18.35 -1.8M-18.35,1.1Q-15.1 5.45 -9.6 5.35Q-15.1 9.55 -18.35 1.1M-26.7,2.2L-27.25 2.25Q-28.1 2.4 -28.55 1.2L-28.9 0.35Q-27.7 0.9 -26.7 2.2"/></g>
+      <g id="DA"><path id="da-b" fill="#1a5a1a" d="M29.75,-36.85Q-17.75 -61.45 -42.05 -40.95L-45.35 -38.35L-53.7 -41.15L-51.15 -44.85Q-34.85 -68.4 21 -57.8Q-32.2 -72.1 -50.25 -50Q-53.85 -45.65 -56.05 -41.95L-64.7 -43.35L-60.6 -50.3Q-45.9 -75.55 5.1 -79.35Q-2.2 -79.8 -9.45 -79.15Q-16.2 -78.55 -22.85 -77.15Q-29.85 -75.65 -36.5 -73Q-43.05 -70.4 -48.8 -66.85Q-54.55 -63.35 -56.8 -60.3L-60.5 -55.4Q-62.95 -52.1 -67 -43.55L-70.55 -43.55L-76.35 -42.95Q-74.6 -49.1 -71.85 -54.85Q-68.9 -61.25 -64.8 -67.1Q-60.8 -73 -55.45 -77.55Q-49.9 -82.35 -43.65 -85.85L-30.6 -92.7Q-24.05 -95.95 -17 -98.25Q-63.75 -86.35 -73.65 -57.1Q-75.75 -50.75 -77.45 -42.75Q-82.9 -41.75 -88 -39.65Q-87.65 -46.65 -86.3 -53.05Q-79.8 -89.8 -36.65 -117.2Q-80.65 -94.5 -87.55 -59.55Q-88.65 -54.15 -88.95 -39.4L-89.8 -38.85L-92.7 -37.6Q-93.75 -44.35 -94.1 -51.15Q-94.4 -58.2 -93.25 -65.1Q-92.15 -72.5 -90.05 -79.65Q-88.05 -86.55 -85 -93Q-82.1 -99.3 -78.45 -105.15Q-74.6 -111.35 -70.25 -117.25Q-65.95 -123.1 -61.1 -128.55Q-70.3 -119.35 -77.9 -108.7Q-86 -97.3 -90.8 -84.05Q-95.8 -70.5 -96 -56.15Q-96.1 -46 -94.05 -36.05L-93.25 -31.55Q-93.5 -35.65 -92.35 -36Q-79.85 -42 -66.6 -40.45Q-52.45 -38.85 -39.2 -33.25Q-28.3 -29.9 -21.25 -24.15Q-17.8 -23.3 -8.6 -15.6Q-12.1 -20.75 -16.75 -24.5Q-24.55 -30.7 -34.25 -34.05L-42.55 -37Q-38.9 -41.25 -31.5 -43.25Q-24.05 -45.3 -16.2 -46.3Q-8.35 -47.35 -1 -46Q5.95 -44.75 12.75 -42.85Q19.85 -40.9 29.75 -36.85M-92.45,-27.35L-94.95 -36.25Q-109.7 -105 -27.95 -154.65Q-98.65 -103.8 -91.75 -39.4L-89.95 -40.2Q-92.2 -105.25 -5.6 -130.9Q-78.8 -99.95 -87.45 -40.9Q-83.15 -42.95 -78.45 -43.95Q-70 -101.3 17.65 -103.8Q-56.9 -93.4 -74.5 -44.55L-67.4 -45.45Q-49.1 -94.95 39.25 -75.65Q-36.75 -84.35 -62.25 -44.25L-57.3 -43.6Q-31.65 -86.5 56.15 -46.05Q-20.3 -73.35 -51.35 -41.7L-45.95 -39.75Q-17.85 -71.35 51.85 -24.8Q-8.7 -56.4 -39.75 -37.05Q-28.15 -34.05 -14.25 -24.45Q-8.6 -19.85 -5.8 -16.95Q5.95 -2.4 20 0Q5.95 2.4 -5.8 16.95Q-8.6 19.85 -14.25 24.45Q-28.15 34.05 -39.75 37.05Q-8.7 56.4 51.85 24.8Q-17.85 71.35 -45.95 39.75L-51.35 41.7Q-20.3 73.35 56.15 46.1Q-31.65 86.5 -57.3 43.65L-62.25 44.3Q-36.75 84.35 39.25 75.7Q-49.1 94.95 -67.4 45.5L-74.5 44.6Q-56.9 93.4 17.65 103.85Q-70 101.3 -78.45 43.95Q-83.15 42.95 -87.45 40.9Q-78.8 99.95 -5.6 130.9Q-92.2 105.25 -89.95 40.25L-91.75 39.4Q-98.65 103.8 -27.95 154.65Q-109.7 105 -94.95 36.3L-92.45 27.35Q-93.05 33.9 -92.05 34.75Q-91.1 35.55 -88.95 36.7L-87.95 37Q-83.7 38.25 -79.05 38.8L-77.25 38.95Q-72.55 39.3 -67.5 38.85L-65.45 38.65Q-44.4 36.05 -17.8 19.6Q-9.9 12.8 -15.15 4.4Q-18.15 3.15 -19 0Q-18.15 -3.15 -15.15 -4.4Q-9.9 -12.8 -17.8 -19.6L-17.8 -19.55Q-44.4 -36.05 -65.45 -38.6L-67.5 -38.8Q-72.55 -39.3 -77.25 -38.95L-79.05 -38.75Q-83.7 -38.25 -87.95 -36.95L-88.95 -36.65Q-91.1 -35.55 -92.05 -34.7Q-93.05 -33.9 -92.45 -27.35M-8.6,15.6Q-17.8 23.3 -21.25 24.2Q-28.3 29.9 -39.2 33.3Q-52.45 38.85 -66.6 40.5Q-79.85 42 -92.35 36Q-93.5 35.65 -93.25 31.55L-94.05 36.1Q-96.1 46.05 -96 56.15Q-95.8 70.5 -90.8 84.1Q-86 97.3 -77.9 108.75Q-70.3 119.35 -61.1 128.6Q-65.95 123.1 -70.25 117.25Q-74.6 111.35 -78.45 105.15Q-82.1 99.3 -85 93Q-88.05 86.55 -90.05 79.7Q-92.15 72.5 -93.25 65.1Q-94.4 58.2 -94.1 51.2Q-93.75 44.35 -92.7 37.6L-89.8 38.9L-88.95 39.45Q-88.65 54.15 -87.55 59.55Q-80.65 94.5 -36.65 117.25Q-79.8 89.8 -86.3 53.1Q-87.65 46.65 -88 39.65Q-82.9 41.75 -77.45 42.75Q-75.75 50.75 -73.65 57.15Q-63.75 86.35 -17 98.3Q-24.05 95.95 -30.6 92.75L-43.65 85.9Q-49.9 82.35 -55.45 77.6Q-60.8 73 -64.8 67.15Q-68.9 61.25 -71.85 54.85Q-74.6 49.1 -76.35 42.95L-70.55 43.6L-67 43.6Q-62.95 52.1 -60.5 55.4L-56.8 60.35Q-54.55 63.35 -48.8 66.9Q-43.05 70.4 -36.5 73Q-29.85 75.65 -22.85 77.15Q-16.2 78.55 -9.45 79.15Q-2.2 79.8 5.1 79.35Q-45.9 75.55 -60.6 50.3L-64.7 43.4L-56.05 41.95Q-53.85 45.65 -50.25 50Q-32.2 72.1 21 57.85Q-34.85 68.4 -51.15 44.85L-53.7 41.2L-45.35 38.35L-42.05 40.95Q-17.75 61.45 29.75 36.85Q19.85 40.9 12.75 42.9Q5.95 44.75 -1 46Q-8.35 47.35 -16.2 46.35Q-24.05 45.3 -31.5 43.3Q-38.9 41.25 -42.55 37.05L-34.25 34.05Q-24.55 30.7 -16.75 24.5Q-12.1 20.75 -8.6 15.6"/></g>
+      <g id="DS"><path id="ds-b" fill="#2a7a2a" d="M-18.8,0Q-17.85 -5.7 -12.3 -9.6Q-11.2 -5.35 -6.5 -8.25L-6.2 -8.3Q1.25 -16.25 6.65 -12.4Q0.05 -12.55 0 -5.95Q2.7 -2.4 7.75 -4.1Q18 -1.45 18.8 0L-18.8 0"/><path fill="#1a5a1a" d="M18.8,0Q18 1.45 7.75 4.1Q2.7 2.4 0 5.95Q0.05 12.55 6.65 12.4Q1.25 16.25 -6.2 8.35L-6.5 8.25Q-11.2 5.35 -12.3 9.6Q-17.85 5.7 -18.8 0L18.8 0"/></g>
+    </defs>
+    <g id="roam-screen"></g>
+  </svg>
+
+  <div class="monitor">
+    <div class="mshell">
+      <div class="mscreen"><canvas id="gc"></canvas></div>
+    </div>
+  </div>
+  <div class="status">
+    <div class="srow"><span>WEB3 DEV</span><div class="sdot"></div></div>
+    <div class="srow"><span>BUILDING</span><div class="sdot d1"></div></div>
+    <div class="srow"><span>ONLINE</span><div class="sdot d2"></div></div>
+  </div>
+</div>
+
+<!-- CURSOR DRAGON: dark mode only, follows mouse -->
+<svg id="cursor-dragon" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:99999;overflow:visible;">
+  <defs>
+    <g id="DC"><path id="dc-b" fill="#39ff14" d="M-21.05,-8.25Q-13.6 -15.95 -1.3 -12.1Q-7.85 -8.5 -5.85 -4.35Q-2.3 -4.85 10.5 0.15Q0 4.35 -5.85 3.65Q-7.85 7.75 -1.25 12.45Q-13.6 15.2 -21.05 7.5Q-29.55 4.05 -30.2 -0.35Q-29.55 -4.8 -21.05 -8.25"/><path fill="#a0ffa0" d="M-28.9,-1.1L-28.55 -1.95Q-28.1 -3.1 -27.25 -2.95L-26.7 -2.95Q-27.7 -1.65 -28.9 -1.1M-18.35,-1.8Q-15.1 -10.3 -9.6 -6.05Q-15.1 -6.2 -18.35 -1.8M-18.35,1.1Q-15.1 5.45 -9.6 5.35Q-15.1 9.55 -18.35 1.1M-26.7,2.2L-27.25 2.25Q-28.1 2.4 -28.55 1.2L-28.9 0.35Q-27.7 0.9 -26.7 2.2"/></g>
+    <g id="DCA"><path fill="#1a8a1a" d="M29.75,-36.85Q-17.75 -61.45 -42.05 -40.95L-45.35 -38.35L-53.7 -41.15L-51.15 -44.85Q-34.85 -68.4 21 -57.8Q-32.2 -72.1 -50.25 -50Q-53.85 -45.65 -56.05 -41.95L-64.7 -43.35L-60.6 -50.3Q-45.9 -75.55 5.1 -79.35Q-2.2 -79.8 -9.45 -79.15Q-16.2 -78.55 -22.85 -77.15Q-29.85 -75.65 -36.5 -73Q-43.05 -70.4 -48.8 -66.85Q-54.55 -63.35 -56.8 -60.3L-60.5 -55.4Q-62.95 -52.1 -67 -43.55L-70.55 -43.55L-76.35 -42.95Q-74.6 -49.1 -71.85 -54.85Q-68.9 -61.25 -64.8 -67.1Q-60.8 -73 -55.45 -77.55Q-49.9 -82.35 -43.65 -85.85L-30.6 -92.7Q-24.05 -95.95 -17 -98.25Q-63.75 -86.35 -73.65 -57.1Q-75.75 -50.75 -77.45 -42.75Q-82.9 -41.75 -88 -39.65Q-87.65 -46.65 -86.3 -53.05Q-79.8 -89.8 -36.65 -117.2Q-80.65 -94.5 -87.55 -59.55Q-88.65 -54.15 -88.95 -39.4L-89.8 -38.85L-92.7 -37.6Q-93.75 -44.35 -94.1 -51.15Q-94.4 -58.2 -93.25 -65.1Q-92.15 -72.5 -90.05 -79.65Q-88.05 -86.55 -85 -93Q-82.1 -99.3 -78.45 -105.15Q-74.6 -111.35 -70.25 -117.25Q-65.95 -123.1 -61.1 -128.55Q-70.3 -119.35 -77.9 -108.7Q-86 -97.3 -90.8 -84.05Q-95.8 -70.5 -96 -56.15Q-96.1 -46 -94.05 -36.05L-93.25 -31.55Q-93.5 -35.65 -92.35 -36Q-79.85 -42 -66.6 -40.45Q-52.45 -38.85 -39.2 -33.25Q-28.3 -29.9 -21.25 -24.15Q-17.8 -23.3 -8.6 -15.6Q-12.1 -20.75 -16.75 -24.5Q-24.55 -30.7 -34.25 -34.05L-42.55 -37Q-38.9 -41.25 -31.5 -43.25Q-24.05 -45.3 -16.2 -46.3Q-8.35 -47.35 -1 -46Q5.95 -44.75 12.75 -42.85Q19.85 -40.9 29.75 -36.85M-92.45,-27.35L-94.95 -36.25Q-109.7 -105 -27.95 -154.65Q-98.65 -103.8 -91.75 -39.4L-89.95 -40.2Q-92.2 -105.25 -5.6 -130.9Q-78.8 -99.95 -87.45 -40.9Q-83.15 -42.95 -78.45 -43.95Q-70 -101.3 17.65 -103.8Q-56.9 -93.4 -74.5 -44.55L-67.4 -45.45Q-49.1 -94.95 39.25 -75.65Q-36.75 -84.35 -62.25 -44.25L-57.3 -43.6Q-31.65 -86.5 56.15 -46.05Q-20.3 -73.35 -51.35 -41.7L-45.95 -39.75Q-17.85 -71.35 51.85 -24.8Q-8.7 -56.4 -39.75 -37.05Q-28.15 -34.05 -14.25 -24.45Q-8.6 -19.85 -5.8 -16.95Q5.95 -2.4 20 0Q5.95 2.4 -5.8 16.95Q-8.6 19.85 -14.25 24.45Q-28.15 34.05 -39.75 37.05Q-8.7 56.4 51.85 24.8Q-17.85 71.35 -45.95 39.75L-51.35 41.7Q-20.3 73.35 56.15 46.1Q-31.65 86.5 -57.3 43.65L-62.25 44.3Q-36.75 84.35 39.25 75.7Q-49.1 94.95 -67.4 45.5L-74.5 44.6Q-56.9 93.4 17.65 103.85Q-70 101.3 -78.45 43.95Q-83.15 42.95 -87.45 40.9Q-78.8 99.95 -5.6 130.9Q-92.2 105.25 -89.95 40.25L-91.75 39.4Q-98.65 103.8 -27.95 154.65Q-109.7 105 -94.95 36.3L-92.45 27.35Q-93.05 33.9 -92.05 34.75Q-91.1 35.55 -88.95 36.7L-87.95 37Q-83.7 38.25 -79.05 38.8L-77.25 38.95Q-72.55 39.3 -67.5 38.85L-65.45 38.65Q-44.4 36.05 -17.8 19.6Q-9.9 12.8 -15.15 4.4Q-18.15 3.15 -19 0Q-18.15 -3.15 -15.15 -4.4Q-9.9 -12.8 -17.8 -19.6L-17.8 -19.55Q-44.4 -36.05 -65.45 -38.6L-67.5 -38.8Q-72.55 -39.3 -77.25 -38.95L-79.05 -38.75Q-83.7 -38.25 -87.95 -36.95L-88.95 -36.65Q-91.1 -35.55 -92.05 -34.7Q-93.05 -33.9 -92.45 -27.35M-8.6,15.6Q-17.8 23.3 -21.25 24.2Q-28.3 29.9 -39.2 33.3Q-52.45 38.85 -66.6 40.5Q-79.85 42 -92.35 36Q-93.5 35.65 -93.25 31.55L-94.05 36.1Q-96.1 46.05 -96 56.15Q-95.8 70.5 -90.8 84.1Q-86 97.3 -77.9 108.75Q-70.3 119.35 -61.1 128.6Q-65.95 123.1 -70.25 117.25Q-74.6 111.35 -78.45 105.15Q-82.1 99.3 -85 93Q-88.05 86.55 -90.05 79.7Q-92.15 72.5 -93.25 65.1Q-94.4 58.2 -94.1 51.2Q-93.75 44.35 -92.7 37.6L-89.8 38.9L-88.95 39.45Q-88.65 54.15 -87.55 59.55Q-80.65 94.5 -36.65 117.25Q-79.8 89.8 -86.3 53.1Q-87.65 46.65 -88 39.65Q-82.9 41.75 -77.45 42.75Q-75.75 50.75 -73.65 57.15Q-63.75 86.35 -17 98.3Q-24.05 95.95 -30.6 92.75L-43.65 85.9Q-49.9 82.35 -55.45 77.6Q-60.8 73 -64.8 67.15Q-68.9 61.25 -71.85 54.85Q-74.6 49.1 -76.35 42.95L-70.55 43.6L-67 43.6Q-62.95 52.1 -60.5 55.4L-56.8 60.35Q-54.55 63.35 -48.8 66.9Q-43.05 70.4 -36.5 73Q-29.85 75.65 -22.85 77.15Q-16.2 78.55 -9.45 79.15Q-2.2 79.8 5.1 79.35Q-45.9 75.55 -60.6 50.3L-64.7 43.4L-56.05 41.95Q-53.85 45.65 -50.25 50Q-32.2 72.1 21 57.85Q-34.85 68.4 -51.15 44.85L-53.7 41.2L-45.35 38.35L-42.05 40.95Q-17.75 61.45 29.75 36.85Q19.85 40.9 12.75 42.9Q5.95 44.75 -1 46Q-8.35 47.35 -16.2 46.35Q-24.05 45.3 -31.5 43.3Q-38.9 41.25 -42.55 37.05L-34.25 34.05Q-24.55 30.7 -16.75 24.5Q-12.1 20.75 -8.6 15.6"/></g>
+    <g id="DCS"><path fill="#2a9a2a" d="M-18.8,0Q-17.85 -5.7 -12.3 -9.6Q-11.2 -5.35 -6.5 -8.25L-6.2 -8.3Q1.25 -16.25 6.65 -12.4Q0.05 -12.55 0 -5.95Q2.7 -2.4 7.75 -4.1Q18 -1.45 18.8 0L-18.8 0"/><path fill="#1a7a1a" d="M18.8,0Q18 1.45 7.75 4.1Q2.7 2.4 0 5.95Q0.05 12.55 6.65 12.4Q1.25 16.25 -6.2 8.35L-6.5 8.25Q-11.2 5.35 -12.3 9.6Q-17.85 5.7 -18.8 0L18.8 0"/></g>
+  </defs>
+  <g id="cursor-screen"></g>
+</svg>
+
+<script>
+var isDark = false;
+
+function toggleTheme() {
+  isDark = !isDark;
+  document.getElementById('body').classList.toggle('dark', isDark);
+  document.getElementById('themeBtn').textContent = isDark ? '☀' : '🌙';
+  document.getElementById('cursor-dragon').style.display = isDark ? 'block' : 'none';
+  document.body.style.cursor = isDark ? 'none' : '';
+  globeDark = isDark;
+}
+
+function go(name, el) {
+  document.querySelectorAll('.pg').forEach(function(p){ p.classList.remove('on'); });
+  document.querySelectorAll('nav a').forEach(function(a){ a.classList.remove('active'); });
+  document.getElementById('pg-' + name).classList.add('on');
+  el.classList.add('active');
+}
+
+// GLOBE
+var canvas = document.getElementById('gc');
+var ctx = canvas.getContext('2d');
+var globeDark = false;
+var rot = 95;
+
+function resize() { var p = canvas.parentElement; canvas.width = p.clientWidth || 400; canvas.height = p.clientHeight || 400; }
+function proj(lon,lat,cx,cy,r,rt) { var phi=lat*Math.PI/180,lam=(lon+rt)*Math.PI/180; return {x:cx+r*Math.cos(phi)*Math.sin(lam),y:cy-r*Math.sin(phi),z:Math.cos(phi)*Math.cos(lam)}; }
+
+var land=[[[-168,72],[-140,70],[-120,60],[-100,50],[-85,45],[-82,42],[-75,45],[-60,46],[-55,50],[-60,60],[-70,65],[-78,72],[-100,75],[-130,75],[-155,72],[-168,72]],[[-80,12],[-60,12],[-50,5],[-35,-5],[-38,-18],[-45,-28],[-55,-38],[-65,-55],[-70,-52],[-75,-48],[-80,-38],[-76,-20],[-80,-2],[-80,12]],[[-10,36],[5,44],[14,44],[18,40],[26,41],[30,46],[26,55],[20,60],[14,66],[5,62],[-1,58],[-6,58],[-5,62],[2,66],[10,72],[20,75],[8,72],[-5,65],[-10,58],[-10,50],[-10,36]],[[-18,16],[0,16],[14,16],[36,10],[50,10],[44,0],[40,-10],[35,-25],[24,-35],[16,-35],[5,-20],[0,-5],[-5,5],[-10,5],[-18,16]],[[26,42],[30,46],[40,38],[52,30],[62,24],[70,20],[78,14],[82,14],[90,22],[84,26],[72,28],[64,34],[55,22],[48,28],[40,36],[26,42]],[[78,14],[90,22],[100,14],[108,14],[110,20],[120,30],[130,38],[138,38],[144,40],[148,44],[140,50],[128,45],[118,40],[108,34],[98,28],[90,25],[78,14]],[[40,60],[60,65],[80,70],[102,76],[130,72],[148,60],[158,55],[144,50],[130,44],[114,44],[94,52],[78,54],[60,54],[40,60]],[[114,-22],[124,-14],[134,-12],[140,-18],[150,-22],[154,-28],[150,-38],[144,-40],[136,-36],[128,-34],[122,-32],[114,-28],[114,-22]],[[-55,75],[-45,83],[-22,83],[-14,76],[-24,66],[-46,68],[-55,75]],[[130,32],[132,34],[134,36],[136,38],[138,40],[140,43],[142,44],[141,42],[139,38],[136,34],[132,33],[130,32]],[[-6,50],[2,52],[0,58],[-4,58],[-6,56],[-6,50]],[[5,58],[8,58],[14,56],[22,58],[28,64],[26,70],[20,72],[14,70],[10,62],[5,62],[5,58]],[[62,22],[68,22],[72,20],[78,12],[82,14],[88,22],[84,26],[78,28],[70,28],[64,24],[62,22]],[[104,-6],[108,-8],[112,-8],[114,-8],[116,-6],[114,-4],[108,-4],[104,-6]],[[120,-8],[122,-8],[124,-10],[126,-10],[128,-8],[124,-7],[120,-8]],[[44,-12],[50,-14],[50,-24],[44,-24],[44,-12]],[[166,-46],[172,-46],[172,-34],[168,-36],[166,-40],[166,-46]],[[118,10],[122,14],[124,12],[122,10],[118,10]]];
+
+function frame() {
+  var W=canvas.width,H=canvas.height,cx=W/2,cy=H/2,r=Math.min(W,H)*.42;
+  ctx.clearRect(0,0,W,H);
+  var bg=ctx.createRadialGradient(cx-r*.15,cy-r*.15,r*.05,cx,cy,r);
+  if(globeDark){bg.addColorStop(0,'#0a2a0a');bg.addColorStop(.55,'#051405');bg.addColorStop(1,'#010601');}
+  else{bg.addColorStop(0,'#102818');bg.addColorStop(.55,'#071408');bg.addColorStop(1,'#020704');}
+  ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fillStyle=bg;ctx.fill();
+  ctx.lineWidth=.4;ctx.strokeStyle=globeDark?'rgba(74,255,110,0.08)':'rgba(255,255,255,.033)';
+  for(var lat=-80;lat<=80;lat+=20){ctx.beginPath();var f=true;for(var lon=-180;lon<=180;lon+=2){var p=proj(lon,lat,cx,cy,r,rot);if(p.z>0){if(f)ctx.moveTo(p.x,p.y);else ctx.lineTo(p.x,p.y);f=false;}else f=true;}ctx.stroke();}
+  for(var lo=-180;lo<180;lo+=20){ctx.beginPath();var f2=true;for(var la=-90;la<=90;la+=2){var p2=proj(lo,la,cx,cy,r,rot);if(p2.z>0){if(f2)ctx.moveTo(p2.x,p2.y);else ctx.lineTo(p2.x,p2.y);f2=false;}else f2=true;}ctx.stroke();}
+  for(var pi=0;pi<land.length;pi++){
+    var poly=land[pi];var pts=[];for(var j=0;j<poly.length;j++){pts.push(proj(poly[j][0],poly[j][1],cx,cy,r,rot));}
+    var vis=0;for(var k=0;k<pts.length;k++){if(pts[k].z>0)vis++;}if(vis<2)continue;
+    ctx.beginPath();var fi=true;for(var m=0;m<pts.length;m++){if(pts[m].z>0){if(fi)ctx.moveTo(pts[m].x,pts[m].y);else ctx.lineTo(pts[m].x,pts[m].y);fi=false;}else fi=true;}
+    if(globeDark){ctx.fillStyle='rgba(57,255,20,0.06)';ctx.fill();ctx.shadowColor='rgba(57,255,20,0.9)';ctx.shadowBlur=8;ctx.strokeStyle='rgba(57,255,20,0.9)';ctx.lineWidth=1.2;}
+    else{ctx.fillStyle='rgba(255,255,255,.03)';ctx.fill();ctx.shadowColor='rgba(255,255,255,.7)';ctx.shadowBlur=5;ctx.strokeStyle='rgba(255,255,255,.88)';ctx.lineWidth=1.3;}
+    ctx.stroke();ctx.shadowBlur=0;
+  }
+  var aC=globeDark?'rgba(57,255,20,':'rgba(200,255,220,';
+  var atmo=ctx.createRadialGradient(cx,cy,r*.9,cx,cy,r*1.12);
+  atmo.addColorStop(0,aC+'0.10)');atmo.addColorStop(.6,aC+'0.03)');atmo.addColorStop(1,aC+'0)');
+  ctx.beginPath();ctx.arc(cx,cy,r*1.12,0,Math.PI*2);ctx.fillStyle=atmo;ctx.fill();
+  var rim=ctx.createRadialGradient(cx,cy,r*.82,cx,cy,r);
+  rim.addColorStop(0,'rgba(255,255,255,0)');rim.addColorStop(1,globeDark?'rgba(57,255,20,.18)':'rgba(180,255,200,.20)');
+  ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fillStyle=rim;ctx.fill();
+  ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);
+  ctx.strokeStyle=globeDark?'rgba(57,255,20,.25)':'rgba(180,255,200,.18)';ctx.lineWidth=1;ctx.stroke();
+  rot+=.08;requestAnimationFrame(frame);
+}
+window.addEventListener('load', function(){ resize(); frame(); });
+window.addEventListener('resize', resize);
+
+// ROAMING DRAGON (right panel background)
+(function(){
+  var sc=document.getElementById('roam-screen');
+  var NS='http://www.w3.org/2000/svg',XL='http://www.w3.org/1999/xlink';
+  var N=28,SCALE=0.42,els=[],frm=0;
+  var rightEl=document.querySelector('.right');
+  function pw(){return rightEl.clientWidth||600;}
+  function ph(){return rightEl.clientHeight||600;}
+  for(var i=0;i<N;i++) els[i]={use:null,x:pw()/2,y:ph()/2};
+  var tx=pw()*0.5,ty=ph()*0.5;
+  function newTarget(){var m=80;tx=m+Math.random()*(pw()-m*2);ty=m+Math.random()*(ph()-m*2);}
+  newTarget();
+  setInterval(newTarget,3000+Math.random()*1500);
+  for(var i2=1;i2<N;i2++){
+    var u=document.createElementNS(NS,'use');els[i2].use=u;
+    if(i2===1)u.setAttributeNS(XL,'xlink:href','#DR');
+    else if(i2===6||i2===11)u.setAttributeNS(XL,'xlink:href','#DA');
+    else u.setAttributeNS(XL,'xlink:href','#DS');
+    sc.prepend(u);
+  }
+  (function run(){
+    requestAnimationFrame(run);frm+=0.012;
+    var gx=tx+Math.cos(frm*1.3)*40,gy=ty+Math.sin(frm*0.9)*30;
+    els[0].x+=(gx-els[0].x)/14;els[0].y+=(gy-els[0].y)/14;
+    for(var i=1;i<N;i++){
+      var e=els[i],ep=els[i-1];
+      var a=Math.atan2(e.y-ep.y,e.x-ep.x);
+      e.x+=(ep.x-e.x+(Math.cos(a)*(60-i))/5)/4;
+      e.y+=(ep.y-e.y+(Math.sin(a)*(60-i))/5)/4;
+      var s=((80+2*(1-i))/50)*SCALE;
+      e.use.setAttributeNS(null,'transform','translate('+(ep.x+e.x)/2+','+(ep.y+e.y)/2+') rotate('+(180/Math.PI)*a+') scale('+s+','+s+')');
+    }
+  })();
+})();
+
+// CURSOR DRAGON (follows mouse, dark mode only)
+(function(){
+  var sc=document.getElementById('cursor-screen');
+  var NS='http://www.w3.org/2000/svg',XL='http://www.w3.org/1999/xlink';
+  var N=28,SCALE=0.38,els=[];
+  var ptr={x:window.innerWidth/2,y:window.innerHeight/2};
+  for(var i=0;i<N;i++) els[i]={use:null,x:ptr.x,y:ptr.y};
+  window.addEventListener('pointermove',function(e){ptr.x=e.clientX;ptr.y=e.clientY;});
+  for(var i2=1;i2<N;i2++){
+    var u=document.createElementNS(NS,'use');els[i2].use=u;
+    if(i2===1)u.setAttributeNS(XL,'xlink:href','#DC');
+    else if(i2===6||i2===11)u.setAttributeNS(XL,'xlink:href','#DCA');
+    else u.setAttributeNS(XL,'xlink:href','#DCS');
+    sc.prepend(u);
+  }
+  (function run(){
+    requestAnimationFrame(run);
+    els[0].x+=(ptr.x-els[0].x)/8;els[0].y+=(ptr.y-els[0].y)/8;
+    for(var i=1;i<N;i++){
+      var e=els[i],ep=els[i-1];
+      var a=Math.atan2(e.y-ep.y,e.x-ep.x);
+      e.x+=(ep.x-e.x+(Math.cos(a)*(60-i))/5)/4;
+      e.y+=(ep.y-e.y+(Math.sin(a)*(60-i))/5)/4;
+      var s=((80+2*(1-i))/50)*SCALE;
+      e.use.setAttributeNS(null,'transform','translate('+(ep.x+e.x)/2+','+(ep.y+e.y)/2+') rotate('+(180/Math.PI)*a+') scale('+s+','+s+')');
+    }
+  })();
+})();
+</script>
+</body>
+</html>
