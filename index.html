@@ -15,7 +15,7 @@ body.dark::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 @keyframes flicker{0%,19%,21%,23%,25%,54%,56%,100%{opacity:1}20%,24%,55%{opacity:.75}}
 @keyframes glitch{0%,90%,100%{clip-path:none;transform:none;}91%{clip-path:polygon(0 20%,100% 20%,100% 40%,0 40%);transform:translate(-3px,0);}92%{clip-path:polygon(0 60%,100% 60%,100% 80%,0 80%);transform:translate(3px,0);}93%,95%{clip-path:none;transform:none;}94%{clip-path:polygon(0 10%,100% 10%,100% 30%,0 30%);transform:translate(-2px,0);}}
-.left{width:400px;min-width:400px;background:var(--panel);display:flex;flex-direction:column;border-right:1px solid var(--border2);transition:all .4s;}
+.left{width:440px;min-width:440px;background:var(--panel);display:flex;flex-direction:column;border-right:1px solid var(--border2);transition:all .4s;}
 body.dark .left{box-shadow:inset -8px 0 20px rgba(74,255,110,.03);animation:flicker 8s infinite;}
 .topbar{display:flex;align-items:center;height:52px;flex-shrink:0;border-bottom:1px solid var(--border2);background:var(--panel2);transition:all .4s;}
 .tlogo{display:flex;align-items:center;gap:10px;padding:0 14px;height:100%;border-right:1px solid var(--border2);}
@@ -68,6 +68,16 @@ body.dark .ctitle{text-shadow:0 0 6px var(--green);}
 .arow:last-child{border-bottom:none;}
 .anum{font-size:9px;font-weight:700;color:var(--gdim);flex-shrink:0;}
 body.dark .anum{text-shadow:0 0 8px var(--gdim);}
+.cert-card{border:1px solid var(--border2);padding:14px;margin-bottom:12px;background:var(--panel2);position:relative;transition:all .2s;}
+.cert-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(to bottom,var(--gdim),transparent);opacity:0;transition:opacity .2s;}
+.cert-card:hover::before{opacity:1;}
+body.dark .cert-card:hover{box-shadow:0 0 12px var(--glow);}
+.cert-issuer{font-size:8px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gdim);margin-bottom:4px;}
+.cert-title{font-size:11px;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.4;}
+body.dark .cert-title{text-shadow:0 0 6px var(--green);}
+.cert-meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px;}
+.cert-meta span{font-size:8.5px;color:var(--dim);border:1px solid var(--border);padding:2px 7px;background:var(--panel3);}
+.cert-code{font-size:8px;color:var(--mid);letter-spacing:.08em;font-family:'IBM Plex Mono',monospace;}
 .bot{display:flex;border-top:1px solid var(--border2);flex-shrink:0;}
 .hirebtn{flex:1;background:var(--panel2);border:none;border-right:1px solid var(--border2);padding:13px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;color:var(--text);transition:all .2s;}
 .hirebtn:hover{background:var(--panel3);}
@@ -79,7 +89,7 @@ body.dark .led{box-shadow:0 0 8px var(--green),0 0 16px var(--gdim);}
 .moonbtn:hover{background:var(--panel3);}
 .right{flex:1;background:var(--bg);display:flex;align-items:center;justify-content:center;position:relative;transition:background .4s;}
 body.dark .right{background:radial-gradient(ellipse at 60% 50%,#0a1a0a 0%,#050a05 100%);}
-.monitor{width:min(560px,84%);aspect-ratio:1.05/1;position:relative;z-index:2;}
+.monitor{width:min(420px,72%);aspect-ratio:1.05/1;position:relative;z-index:2;}
 .mshell{width:100%;height:100%;border-radius:28px;padding:16px;background:linear-gradient(160deg,#ccc8b4 0%,#aaa698 45%,#96927e 100%);box-shadow:inset 0 3px 6px rgba(255,255,255,.28),inset 0 -3px 8px rgba(0,0,0,.25),5px 8px 0 #7a7668,8px 14px 24px rgba(0,0,0,.35);transition:all .4s;}
 body.dark .mshell{background:linear-gradient(150deg,#1a2a1a 0%,#0d1a0d 40%,#080e08 100%);box-shadow:inset 0 2px 4px rgba(74,255,110,.08),inset 0 -2px 6px rgba(0,0,0,.6),0 0 0 1px #1a3a1a,4px 6px 0 #050a05,6px 10px 20px rgba(0,0,0,.8);}
 .mscreen{width:100%;height:100%;background:#060d07;border-radius:12px;overflow:hidden;position:relative;box-shadow:inset 0 0 80px rgba(0,0,0,.95);}
@@ -115,11 +125,13 @@ a,button,.hirebtn,.moonbtn{cursor:pointer;}
     <a class="active" onclick="go('info',this)">INFO</a>
     <a onclick="go('projects',this)">PROJECTS</a>
     <a onclick="go('skills',this)">SKILLS</a>
+    <a onclick="go('certs',this)">CERTIFICATIONS</a>
     <a onclick="go('blog',this)">BLOG</a>
     <a onclick="go('contact',this)">CONTACT</a>
   </nav>
   <div class="content">
 
+    <!-- INFO PAGE: Projects first, then Writing -->
     <div class="pg on" id="pg-info">
       <div class="stamp">PORTFOLIO // 2025</div>
       <div style="padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid var(--border2)">
@@ -137,9 +149,22 @@ a,button,.hirebtn,.moonbtn{cursor:pointer;}
           <a href="mailto:surenderpal3035@gmail.com" style="font-size:8.5px;color:var(--mid);text-decoration:none;border:1px solid var(--border2);padding:3px 8px;background:var(--panel2)">Email</a>
         </div>
       </div>
+
+      <!-- PROJECTS FIRST -->
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px">
+        <span style="font-size:12px;font-weight:700;color:var(--text)">Projects</span>
+        <a href="#" onclick="go('projects',document.querySelectorAll('nav a')[1]);return false;" style="font-size:8.5px;color:var(--dim);text-decoration:none">View All →</a>
+      </div>
+      <div style="border:1px solid var(--border2);background:var(--panel2);margin-bottom:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-bottom:1px solid var(--border)"><div><div style="font-size:10px;font-weight:600;color:var(--text)">SkillTube</div><div style="font-size:9px;color:var(--mid)">AI-powered learning platform</div></div><a href="https://skillbuild.space/" target="_blank" style="font-size:9px;color:var(--mid);text-decoration:none;border:1px solid var(--border2);padding:2px 7px;background:var(--panel)">↗</a></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-bottom:1px solid var(--border)"><div><div style="font-size:10px;font-weight:600;color:var(--text)">IPFS NFT Viewer</div><div style="font-size:9px;color:var(--mid)">Web3 on-chain metadata viewer</div></div><a href="https://surenderpl1313.github.io/ipfs-nft-viewer/" target="_blank" style="font-size:9px;color:var(--mid);text-decoration:none;border:1px solid var(--border2);padding:2px 7px;background:var(--panel)">↗</a></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px"><div><div style="font-size:10px;font-weight:600;color:var(--text)">AI Chatbot</div><div style="font-size:9px;color:var(--mid)">NLP conversational chatbot</div></div><a href="https://chatbot-b62i.onrender.com/" target="_blank" style="font-size:9px;color:var(--mid);text-decoration:none;border:1px solid var(--border2);padding:2px 7px;background:var(--panel)">↗</a></div>
+      </div>
+
+      <!-- WRITING SECOND -->
       <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px">
         <span style="font-size:12px;font-weight:700;color:var(--text)">Writing</span>
-        <a href="#" onclick="go('blog',document.querySelectorAll('nav a')[3]);return false;" style="font-size:8.5px;color:var(--dim);text-decoration:none">View All →</a>
+        <a href="#" onclick="go('blog',document.querySelectorAll('nav a')[4]);return false;" style="font-size:8.5px;color:var(--dim);text-decoration:none">View All →</a>
       </div>
       <div style="border:1px solid var(--border2);background:var(--panel2);margin-bottom:16px">
         <div style="display:flex;gap:12px;padding:10px 12px;border-bottom:1px solid var(--border)">
@@ -151,22 +176,13 @@ a,button,.hirebtn,.moonbtn{cursor:pointer;}
           <div><div style="font-size:10px;font-weight:600;color:var(--text);margin-bottom:2px">Is JSON the Hidden Backbone of Web3?</div><div style="font-size:9px;color:var(--mid)">How JSON underpins NFT metadata and smart contract ABIs</div></div>
         </div>
       </div>
-      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px">
-        <span style="font-size:12px;font-weight:700;color:var(--text)">Projects</span>
-        <a href="#" onclick="go('projects',document.querySelectorAll('nav a')[1]);return false;" style="font-size:8.5px;color:var(--dim);text-decoration:none">View All →</a>
-      </div>
-      <div style="border:1px solid var(--border2);background:var(--panel2)">
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-bottom:1px solid var(--border)"><div><div style="font-size:10px;font-weight:600;color:var(--text)">SkillTube</div><div style="font-size:9px;color:var(--mid)">AI-powered learning platform</div></div><a href="https://skillbuild.space/" target="_blank" style="font-size:9px;color:var(--mid);text-decoration:none;border:1px solid var(--border2);padding:2px 7px;background:var(--panel)">↗</a></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-bottom:1px solid var(--border)"><div><div style="font-size:10px;font-weight:600;color:var(--text)">IPFS NFT Viewer</div><div style="font-size:9px;color:var(--mid)">Web3 on-chain metadata viewer</div></div><a href="https://surenderpl1313.github.io/ipfs-nft-viewer/" target="_blank" style="font-size:9px;color:var(--mid);text-decoration:none;border:1px solid var(--border2);padding:2px 7px;background:var(--panel)">↗</a></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px"><div><div style="font-size:10px;font-weight:600;color:var(--text)">AI Chatbot</div><div style="font-size:9px;color:var(--mid)">NLP conversational chatbot</div></div><a href="https://chatbot-b62i.onrender.com/" target="_blank" style="font-size:9px;color:var(--mid);text-decoration:none;border:1px solid var(--border2);padding:2px 7px;background:var(--panel)">↗</a></div>
-      </div>
     </div>
 
     <div class="pg" id="pg-projects">
       <div class="stamp">BUILD LOG // 2024-25</div>
       <div class="card"><div class="ctop"><div class="ctitle">SkillTube</div><div class="cyear">2025</div></div><div class="cdesc">AI-powered personalized learning platform with curated video content.</div><div class="clinks"><a href="https://skillbuild.space/" target="_blank">↗ LIVE</a></div><span class="tag">Python</span><span class="tag">Node.js</span><span class="tag">REST APIs</span></div>
-      <div class="card"><div class="ctop"><div class="ctitle">IPFS NFT Viewer</div><div class="cyear">2025</div></div><div class="cdesc">Web3 app for viewing on-chain NFT metadata stored on IPFS.</div><div class="clinks"><a href="https://surenderpl1313.github.io/ipfs-nft-viewer/" target="_blank">↗ LIVE</a><a href="https://github.com/surenderml1313" target="_blank">↗ GITHUB</a></div><span class="tag">Web3.js</span><span class="tag">Ethers.js</span><span class="tag">IPFS</span></div>
-      <div class="card"><div class="ctop"><div class="ctitle">NFT Generator</div><div class="cyear">2024</div></div><div class="cdesc">Programmatically generate and deploy NFT collections on-chain.</div><div class="clinks"><a href="https://github.com/surenderml1313" target="_blank">↗ GITHUB</a></div><span class="tag">Solidity</span><span class="tag">Web3.js</span><span class="tag">Python</span></div>
+      <div class="card"><div class="ctop"><div class="ctitle">IPFS NFT Viewer</div><div class="cyear">2025</div></div><div class="cdesc">Web3 app for viewing on-chain NFT metadata stored on IPFS.</div><div class="clinks"><a href="https://surenderpl1313.github.io/ipfs-nft-viewer/" target="_blank">↗ LIVE</a><a href="https://github.com/surenderpl1313" target="_blank">↗ GITHUB</a></div><span class="tag">Web3.js</span><span class="tag">Ethers.js</span><span class="tag">IPFS</span></div>
+      <div class="card"><div class="ctop"><div class="ctitle">NFT Generator</div><div class="cyear">2024</div></div><div class="cdesc">Programmatically generate and deploy NFT collections on-chain.</div><div class="clinks"><a href="https://github.com/surenderpl1313" target="_blank">↗ GITHUB</a></div><span class="tag">Solidity</span><span class="tag">Web3.js</span><span class="tag">Python</span></div>
       <div class="card"><div class="ctop"><div class="ctitle">AI Chatbot</div><div class="cyear">2024</div></div><div class="cdesc">NLP conversational chatbot deployed on Render.</div><div class="clinks"><a href="https://chatbot-b62i.onrender.com/" target="_blank">↗ LIVE</a></div><span class="tag">Python</span><span class="tag">NLP</span></div>
     </div>
 
@@ -179,17 +195,102 @@ a,button,.hirebtn,.moonbtn{cursor:pointer;}
       <div class="lbl" style="margin-bottom:8px">WEB3 / BLOCKCHAIN</div>
       <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px"><span class="tag" style="font-size:9.5px;padding:4px 10px">Ethereum</span><span class="tag" style="font-size:9.5px;padding:4px 10px">Solidity</span><span class="tag" style="font-size:9.5px;padding:4px 10px">Web3.js</span><span class="tag" style="font-size:9.5px;padding:4px 10px">Ethers.js</span><span class="tag" style="font-size:9.5px;padding:4px 10px">IPFS</span><span class="tag" style="font-size:9.5px;padding:4px 10px">NFTs</span></div>
       <div class="lbl" style="margin-bottom:8px">TOOLS</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px"><span class="tag" style="font-size:9.5px;padding:4px 10px">Git</span><span class="tag" style="font-size:9.5px;padding:4px 10px">GitHub</span><span class="tag" style="font-size:9.5px;padding:4px 10px">Google Cloud</span><span class="tag" style="font-size:9.5px;padding:4px 10px">Neo4j</span></div>
-      <div class="lbl" style="margin-bottom:8px">CERTIFICATIONS</div>
-      <div class="card" style="padding:0;margin-bottom:14px">
-        <div class="irow"><span class="ik">Google Cloud</span><span class="iv">Foundational / Associate</span></div>
-        <div class="irow"><span class="ik">Neo4j</span><span class="iv">Graph DB Certified Pro</span></div>
-      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px"><span class="tag" style="font-size:9.5px;padding:4px 10px">Git</span><span class="tag" style="font-size:9.5px;padding:4px 10px">GitHub</span><span class="tag" style="font-size:9.5px;padding:4px 10px">Google Cloud</span><span class="tag" style="font-size:9.5px;padding:4px 10px">Neo4j</span><span class="tag" style="font-size:9.5px;padding:4px 10px">MongoDB</span></div>
       <div class="lbl" style="margin-bottom:8px">ACHIEVEMENTS</div>
       <div class="card" style="padding:0">
         <div class="arow"><span class="anum">01</span><span style="font-size:10px;color:var(--text)">1st Place — College-level Hackathon</span></div>
         <div class="arow"><span class="anum">02</span><span style="font-size:10px;color:var(--text)">Organized Hackathons &amp; Webathons</span></div>
         <div class="arow"><span class="anum">03</span><span style="font-size:10px;color:var(--text)">Active contributor driving peer learning</span></div>
+      </div>
+    </div>
+
+    <!-- CERTIFICATIONS PAGE -->
+    <div class="pg" id="pg-certs">
+      <div class="stamp">CREDENTIALS // VERIFIED</div>
+
+      <div class="cert-card">
+        <div class="cert-issuer">Google Cloud × Simplilearn SkillUP</div>
+        <div class="cert-title">Responsible AI: Applying AI Principles with Google Cloud</div>
+        <div class="cert-meta">
+          <span>📅 21 Jun 2025</span>
+          <span>✅ Completed</span>
+          <span>🌐 Online</span>
+        </div>
+        <div class="cert-code">Certificate Code: 8498696</div>
+        <div style="margin-top:10px;display:flex;gap:7px;flex-wrap:wrap">
+          <span class="tag" style="font-size:9px;padding:3px 8px">AI Ethics</span>
+          <span class="tag" style="font-size:9px;padding:3px 8px">Google Cloud</span>
+          <span class="tag" style="font-size:9px;padding:3px 8px">Responsible AI</span>
+          <span class="tag" style="font-size:9px;padding:3px 8px">ML Principles</span>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-issuer">MongoDB University</div>
+        <div class="cert-title">MongoDB Basics for Students</div>
+        <div class="cert-meta">
+          <span>📅 24 Jun 2025</span>
+          <span>✅ Completed</span>
+          <span>🏆 MongoDB Skill</span>
+        </div>
+        <div class="cert-code">Credential: credly.com/badges/9af72e2d-5c16-419e-8ae9-a7c5130269a3</div>
+        <div style="margin-top:10px;display:flex;gap:7px;flex-wrap:wrap">
+          <span class="tag" style="font-size:9px;padding:3px 8px">MongoDB</span>
+          <span class="tag" style="font-size:9px;padding:3px 8px">NoSQL</span>
+          <span class="tag" style="font-size:9px;padding:3px 8px">Database</span>
+          <span class="tag" style="font-size:9px;padding:3px 8px">CRUD</span>
+        </div>
+        <div style="margin-top:10px">
+          <a href="https://www.credly.com/badges/9af72e2d-5c16-419e-8ae9-a7c5130269a3" target="_blank" style="font-size:8.5px;color:var(--text);text-decoration:none;border:1px solid var(--border2);padding:3px 10px;background:var(--panel);letter-spacing:.08em;text-transform:uppercase">↗ VERIFY ON CREDLY</a>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-issuer">Amazon Web Services (AWS Academy)</div>
+        <div class="cert-title">AWS Academy Graduate — Generative AI Foundations Training Badge</div>
+        <div class="cert-meta">
+          <span>🏅 Training Badge</span>
+          <span>✅ Completed</span>
+          <span>☁️ AWS</span>
+        </div>
+        <div style="margin-top:10px;display:flex;gap:7px;flex-wrap:wrap">
+          <span class="tag" style="font-size:9px;padding:3px 8px">Generative AI</span>
+          <span class="tag" style="font-size:9px;padding:3px 8px">AWS</span>
+          <span class="tag" style="font-size:9px;padding:3px 8px">LLMs</span>
+          <span class="tag" style="font-size:9px;padding:3px 8px">Cloud AI</span>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-issuer">Neo4j GraphAcademy</div>
+        <div class="cert-title">Neo4j Certified Professional</div>
+        <div class="cert-meta">
+          <span>📅 6 Jul 2025</span>
+          <span>✅ Completed</span>
+          <span>🗄️ Graph DB</span>
+        </div>
+        <div class="cert-code">Certificate ID: ec112d42-45ba-4ce4-b458-2922a0c97a2c</div>
+        <div style="margin-top:10px;display:flex;gap:7px;flex-wrap:wrap">
+          <span class="tag" style="font-size:9px;padding:3px 8px">Neo4j</span>
+          <span class="tag" style="font-size:9px;padding:3px 8px">Graph DB</span>
+          <span class="tag" style="font-size:9px;padding:3px 8px">Cypher</span>
+          <span class="tag" style="font-size:9px;padding:3px 8px">Data Modeling</span>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-issuer">Google Cloud × Simplilearn SkillUP</div>
+        <div class="cert-title">Google Cloud — Foundational &amp; Associate Level</div>
+        <div class="cert-meta">
+          <span>✅ Completed</span>
+          <span>☁️ Google Cloud</span>
+        </div>
+        <div style="margin-top:10px;display:flex;gap:7px;flex-wrap:wrap">
+          <span class="tag" style="font-size:9px;padding:3px 8px">Google Cloud</span>
+          <span class="tag" style="font-size:9px;padding:3px 8px">Cloud Infra</span>
+          <span class="tag" style="font-size:9px;padding:3px 8px">Foundational</span>
+          <span class="tag" style="font-size:9px;padding:3px 8px">Associate</span>
+        </div>
       </div>
     </div>
 
@@ -207,7 +308,7 @@ a,button,.hirebtn,.moonbtn{cursor:pointer;}
       <div class="val">Open to Web3 roles, collaborations, and freelance projects.</div>
       <div class="card" style="padding:0">
         <div class="irow"><span class="ik">Email</span><span class="iv"><a href="mailto:surenderpal3035@gmail.com">surenderpal3035@gmail.com</a></span></div>
-        <div class="irow"><span class="ik">GitHub</span><span class="iv"><a href="https://github.com/surenderml1313" target="_blank">surenderml1313</a></span></div>
+        <div class="irow"><span class="ik">GitHub</span><span class="iv"><a href="https://github.com/surenderpl1313" target="_blank">surenderpl1313</a></span></div>
         <div class="irow"><span class="ik">LinkedIn</span><span class="iv"><a href="https://linkedin.com/in/surender-pal-singh1313" target="_blank">surender-pal-singh1313</a></span></div>
         <div class="irow"><span class="ik">Blog</span><span class="iv"><a href="https://substack.com/@surenderpalsingh1" target="_blank">@surenderpalsingh1</a></span></div>
         <div class="irow"><span class="ik">Location</span><span class="iv">Hyderabad, India</span></div>
@@ -223,7 +324,6 @@ a,button,.hirebtn,.moonbtn{cursor:pointer;}
 </div>
 
 <div class="right">
-  <!-- Roaming dragon behind globe -->
   <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:hidden;">
     <defs>
       <g id="DR"><path id="dr-b" fill="#2a6a3a" d="M-21.05,-8.25Q-13.6 -15.95 -1.3 -12.1Q-7.85 -8.5 -5.85 -4.35Q-2.3 -4.85 10.5 0.15Q0 4.35 -5.85 3.65Q-7.85 7.75 -1.25 12.45Q-13.6 15.2 -21.05 7.5Q-29.55 4.05 -30.2 -0.35Q-29.55 -4.8 -21.05 -8.25"/><path fill="#ffffff" d="M-28.9,-1.1L-28.55 -1.95Q-28.1 -3.1 -27.25 -2.95L-26.7 -2.95Q-27.7 -1.65 -28.9 -1.1M-18.35,-1.8Q-15.1 -10.3 -9.6 -6.05Q-15.1 -6.2 -18.35 -1.8M-18.35,1.1Q-15.1 5.45 -9.6 5.35Q-15.1 9.55 -18.35 1.1M-26.7,2.2L-27.25 2.25Q-28.1 2.4 -28.55 1.2L-28.9 0.35Q-27.7 0.9 -26.7 2.2"/></g>
@@ -245,7 +345,6 @@ a,button,.hirebtn,.moonbtn{cursor:pointer;}
   </div>
 </div>
 
-<!-- CURSOR DRAGON: dark mode only, follows mouse -->
 <svg id="cursor-dragon" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:99999;overflow:visible;">
   <defs>
     <g id="DC"><path id="dc-b" fill="#39ff14" d="M-21.05,-8.25Q-13.6 -15.95 -1.3 -12.1Q-7.85 -8.5 -5.85 -4.35Q-2.3 -4.85 10.5 0.15Q0 4.35 -5.85 3.65Q-7.85 7.75 -1.25 12.45Q-13.6 15.2 -21.05 7.5Q-29.55 4.05 -30.2 -0.35Q-29.55 -4.8 -21.05 -8.25"/><path fill="#a0ffa0" d="M-28.9,-1.1L-28.55 -1.95Q-28.1 -3.1 -27.25 -2.95L-26.7 -2.95Q-27.7 -1.65 -28.9 -1.1M-18.35,-1.8Q-15.1 -10.3 -9.6 -6.05Q-15.1 -6.2 -18.35 -1.8M-18.35,1.1Q-15.1 5.45 -9.6 5.35Q-15.1 9.55 -18.35 1.1M-26.7,2.2L-27.25 2.25Q-28.1 2.4 -28.55 1.2L-28.9 0.35Q-27.7 0.9 -26.7 2.2"/></g>
@@ -257,7 +356,6 @@ a,button,.hirebtn,.moonbtn{cursor:pointer;}
 
 <script>
 var isDark = false;
-
 function toggleTheme() {
   isDark = !isDark;
   document.getElementById('body').classList.toggle('dark', isDark);
@@ -266,27 +364,21 @@ function toggleTheme() {
   document.body.style.cursor = isDark ? 'none' : '';
   globeDark = isDark;
 }
-
 function go(name, el) {
   document.querySelectorAll('.pg').forEach(function(p){ p.classList.remove('on'); });
   document.querySelectorAll('nav a').forEach(function(a){ a.classList.remove('active'); });
   document.getElementById('pg-' + name).classList.add('on');
   el.classList.add('active');
 }
-
-// GLOBE
 var canvas = document.getElementById('gc');
 var ctx = canvas.getContext('2d');
 var globeDark = false;
 var rot = 95;
-
 function resize() { var p = canvas.parentElement; canvas.width = p.clientWidth || 400; canvas.height = p.clientHeight || 400; }
 function proj(lon,lat,cx,cy,r,rt) { var phi=lat*Math.PI/180,lam=(lon+rt)*Math.PI/180; return {x:cx+r*Math.cos(phi)*Math.sin(lam),y:cy-r*Math.sin(phi),z:Math.cos(phi)*Math.cos(lam)}; }
-
 var land=[[[-168,72],[-140,70],[-120,60],[-100,50],[-85,45],[-82,42],[-75,45],[-60,46],[-55,50],[-60,60],[-70,65],[-78,72],[-100,75],[-130,75],[-155,72],[-168,72]],[[-80,12],[-60,12],[-50,5],[-35,-5],[-38,-18],[-45,-28],[-55,-38],[-65,-55],[-70,-52],[-75,-48],[-80,-38],[-76,-20],[-80,-2],[-80,12]],[[-10,36],[5,44],[14,44],[18,40],[26,41],[30,46],[26,55],[20,60],[14,66],[5,62],[-1,58],[-6,58],[-5,62],[2,66],[10,72],[20,75],[8,72],[-5,65],[-10,58],[-10,50],[-10,36]],[[-18,16],[0,16],[14,16],[36,10],[50,10],[44,0],[40,-10],[35,-25],[24,-35],[16,-35],[5,-20],[0,-5],[-5,5],[-10,5],[-18,16]],[[26,42],[30,46],[40,38],[52,30],[62,24],[70,20],[78,14],[82,14],[90,22],[84,26],[72,28],[64,34],[55,22],[48,28],[40,36],[26,42]],[[78,14],[90,22],[100,14],[108,14],[110,20],[120,30],[130,38],[138,38],[144,40],[148,44],[140,50],[128,45],[118,40],[108,34],[98,28],[90,25],[78,14]],[[40,60],[60,65],[80,70],[102,76],[130,72],[148,60],[158,55],[144,50],[130,44],[114,44],[94,52],[78,54],[60,54],[40,60]],[[114,-22],[124,-14],[134,-12],[140,-18],[150,-22],[154,-28],[150,-38],[144,-40],[136,-36],[128,-34],[122,-32],[114,-28],[114,-22]],[[-55,75],[-45,83],[-22,83],[-14,76],[-24,66],[-46,68],[-55,75]],[[130,32],[132,34],[134,36],[136,38],[138,40],[140,43],[142,44],[141,42],[139,38],[136,34],[132,33],[130,32]],[[-6,50],[2,52],[0,58],[-4,58],[-6,56],[-6,50]],[[5,58],[8,58],[14,56],[22,58],[28,64],[26,70],[20,72],[14,70],[10,62],[5,62],[5,58]],[[62,22],[68,22],[72,20],[78,12],[82,14],[88,22],[84,26],[78,28],[70,28],[64,24],[62,22]],[[104,-6],[108,-8],[112,-8],[114,-8],[116,-6],[114,-4],[108,-4],[104,-6]],[[120,-8],[122,-8],[124,-10],[126,-10],[128,-8],[124,-7],[120,-8]],[[44,-12],[50,-14],[50,-24],[44,-24],[44,-12]],[[166,-46],[172,-46],[172,-34],[168,-36],[166,-40],[166,-46]],[[118,10],[122,14],[124,12],[122,10],[118,10]]];
-
 function frame() {
-  var W=canvas.width,H=canvas.height,cx=W/2,cy=H/2,r=Math.min(W,H)*.42;
+  var W=canvas.width,H=canvas.height,cx=W/2,cy=H/2,r=Math.min(W,H)*.34;
   ctx.clearRect(0,0,W,H);
   var bg=ctx.createRadialGradient(cx-r*.15,cy-r*.15,r*.05,cx,cy,r);
   if(globeDark){bg.addColorStop(0,'#0a2a0a');bg.addColorStop(.55,'#051405');bg.addColorStop(1,'#010601');}
@@ -316,8 +408,6 @@ function frame() {
 }
 window.addEventListener('load', function(){ resize(); frame(); });
 window.addEventListener('resize', resize);
-
-// ROAMING DRAGON (right panel background)
 (function(){
   var sc=document.getElementById('roam-screen');
   var NS='http://www.w3.org/2000/svg',XL='http://www.w3.org/1999/xlink';
@@ -351,8 +441,6 @@ window.addEventListener('resize', resize);
     }
   })();
 })();
-
-// CURSOR DRAGON (follows mouse, dark mode only)
 (function(){
   var sc=document.getElementById('cursor-screen');
   var NS='http://www.w3.org/2000/svg',XL='http://www.w3.org/1999/xlink';
